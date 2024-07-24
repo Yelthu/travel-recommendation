@@ -17,7 +17,6 @@ function searchCondition() {
                     beaches.forEach(beache => {
                         let beachDiv = document.createElement('div');
                         beachDiv.classList.add('beach');
-                        console.log('beach data', beache);
 
                         beachDiv.innerHTML += `<img src="${beache.imageUrl}" alt="${beache.id}">`;
                         beachDiv.innerHTML += `<h2>${beache.name}</h2>`;
@@ -27,21 +26,24 @@ function searchCondition() {
                     });
                 }
             }
-            if (input === 'countries') {
+            if (input === 'australia' || input === 'japan' || input === 'brazil') {
                 if (data.countries && data.countries.length > 0) {
                     resultDiv.innerHTML = '';
-                    let countries = data.countries;
 
-                    countries.forEach(country => {
-                        let countriesDiv = document.createElement('div');
-                        countriesDiv.classList.add('beach');
-                        console.log('beach data', country);
+                    const countries = data.countries.find(country => country.name.toLowerCase() === input);
 
-                        countriesDiv.innerHTML += `<img src="${country.imageUrl}" alt="${country.id}">`;
-                        countriesDiv.innerHTML += `<h2>${country.name}</h2>`;
-                        countriesDiv.innerHTML += `<p>${country.cities}</p>`;
+                    const cities = countries.cities;
 
-                        resultDiv.appendChild(countriesDiv);
+                    cities.forEach(city => {
+                        let citiesDiv = document.createElement('div');
+                        citiesDiv.classList.add('beach');
+                
+
+                        citiesDiv.innerHTML += `<img src="${city.imageUrl}" alt="city">`;
+                        citiesDiv.innerHTML += `<h2>${city.name}</h2>`;
+                        citiesDiv.innerHTML += `<p>${city.description}</p>`;
+
+                        resultDiv.appendChild(citiesDiv);
                     });
                 }
             }
@@ -53,7 +55,6 @@ function searchCondition() {
                     temples.forEach(temple => {
                         let templesDiv = document.createElement('div');
                         templesDiv.classList.add('beach');
-                        console.log('beach data', temple);
 
                         templesDiv.innerHTML += `<img src="${temple.imageUrl}" alt="${temple.id}">`;
                         templesDiv.innerHTML += `<h2>${temple.name}</h2>`;
@@ -63,10 +64,6 @@ function searchCondition() {
                     });
                 }
             }
-            else {
-                resultDiv.innerHTML += `<p>Three's no data found , please search like 'beaches' or temples etc.</p>`;
-            }
-
         })
         .catch(error => {
             console.error('Error:', error);
